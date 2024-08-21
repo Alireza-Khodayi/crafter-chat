@@ -15,7 +15,11 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/graphql': {
-          target: env.REACT_APP_API_URL,
+          target: `${env.REACT_APP_API_URL}/graphql`,
+          changeOrigin: true,
+        },
+        '/auth/login': {
+          target: `${env.REACT_APP_API_URL}`,
           changeOrigin: true,
         },
       },

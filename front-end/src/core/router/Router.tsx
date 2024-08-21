@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AppRoutes } from '../utilities/AppRoutes';
+import { appRoutes } from '../utilities/app-routes';
 import { Login, SignUp } from '@/components/auth';
 
 const router = createBrowserRouter([
-  { path: AppRoutes.home, element: <h1>Hi</h1> },
-  { path: AppRoutes.login, element: <Login /> },
-  { path: AppRoutes.signUp, element: <SignUp /> },
+  { path: appRoutes.home, element: <h1>Hi</h1> },
+  { path: appRoutes.login, element: <Login /> },
+  { path: appRoutes.signUp, element: <SignUp /> },
 ]);
 
 function Router() {
