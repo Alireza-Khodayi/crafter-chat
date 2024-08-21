@@ -5,7 +5,7 @@ interface LoginRequest {
   email: string;
   password: string;
 }
-const useLogin = () => {
+function useLogin() {
   const [error, setError] = useState<string>();
 
   const login = async (request: LoginRequest) => {
@@ -30,6 +30,6 @@ const useLogin = () => {
   };
 
   return { login, error };
-};
+}
 
 export { useLogin };

@@ -1,5 +1,14 @@
-import { Button, Stack, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useGetMe } from '@/hooks/useGetMe';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+} from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface IAuthProps {
   submitLabel: string;
@@ -11,6 +20,18 @@ interface IAuthProps {
 function Auth({ onSubmit, submitLabel, children, error }: IAuthProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const { data } = useGetMe();
+  const navigate = useNavigate();
+
+  useEffect(
+    function () {
+      if (data) {
+        navigate('/');
+      }
+    },
+    [data, navigate],
+  );
 
   return (
     <Stack
@@ -35,13 +56,29 @@ function Auth({ onSubmit, submitLabel, children, error }: IAuthProps) {
         helperText={error}
       />
       <TextField
-        type='password'
+        type={showPassword ? 'text' : 'password'}
         label='Password'
         variant='outlined'
         value={password}
         onChange={e => setPassword(e.target.value)}
         error={!!error}
         helperText={error}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position='end'>
+              <IconButton
+                aria-label='toggle password visibility'
+                onClick={() => setShowPassword(show => !show)}
+                onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
+                  event.preventDefault();
+                }}
+                edge='end'
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
       <Button variant='contained' onClick={() => onSubmit({ email, password })}>
         {submitLabel}

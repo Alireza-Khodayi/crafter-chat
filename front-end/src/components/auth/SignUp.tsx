@@ -3,7 +3,8 @@ import { Link as MUILink } from '@mui/material';
 import Auth from './Auth';
 import { useCreateUser } from '@/hooks/useCreateUser';
 import { useState } from 'react';
-import { extractErrorMessage } from '@/core/utilities/Errors';
+import { extractErrorMessage } from '@/core/utilities/errors';
+import { useLogin } from '@/hooks/useLogin';
 
 interface SignUpInput {
   email: string;
@@ -13,6 +14,8 @@ interface SignUpInput {
 function SignUp() {
   const [createUser] = useCreateUser();
   const [error, setError] = useState('');
+  const { login } = useLogin();
+
   async function handleSignUp(signUpInput: SignUpInput) {
     try {
       await createUser({
@@ -20,6 +23,7 @@ function SignUp() {
           createUserInput: signUpInput,
         },
       });
+      await login(signUpInput);
       setError('');
     } catch (err) {
       const errorMessage = extractErrorMessage(err);

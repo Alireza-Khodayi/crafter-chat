@@ -1,2 +1,2 @@
-import { Router } from "./Router";
-export { Router };
+import { router } from './Router';
+export { router };
